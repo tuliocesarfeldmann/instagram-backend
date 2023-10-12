@@ -1,8 +1,15 @@
-import { type Role } from './role.model'
-import { Role as RoleEnum } from '../enum/role.enum'
+import { type Role } from '../enum/role.enum'
+import { type Permission } from './permission.model'
 
 export interface User {
   id: number
-  name: string
-  roles: RoleEnum
+  firstName: string
+  lastName: string
+  city: string
+  state: string
+  country: string
+  email: string
+  password: string
+  role: Role
+  permission: Permission
 }

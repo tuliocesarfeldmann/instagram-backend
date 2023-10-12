@@ -1,5 +1,5 @@
 import { UserService } from '../service/user.service'
-import { NextFunction, Request, Response } from 'express'
+import { type NextFunction, type Request, type Response } from 'express'
 
 export class UserControler {
   readonly userService: UserService
@@ -11,6 +11,8 @@ export class UserControler {
   public createUser = (req: Request, res: Response, next: NextFunction): void => {
     this.userService.createUser(req.body)
       .then(result => res.status(201).send({ success: result }))
-      .catch(err => { next(err) })
+      .catch(err => {
+        next(err)
+      })
   }
 }

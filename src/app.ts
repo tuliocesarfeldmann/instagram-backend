@@ -3,6 +3,7 @@ import { DataBase } from './config/db.config'
 import * as dotenv from 'dotenv'
 import { UserRouter } from './routes/user.router'
 import { AuthRouter } from './routes/auth.router'
+import { CustomError } from './models/customError.model'
 
 dotenv.config()
 
@@ -23,9 +24,14 @@ class App {
   }
 
   private initializeMiddlewares (): void {
-
-    this.app.use((err: Error, req: Request, res: Response, next: any) => {
+    this.app.use((err: Error | CustomError, req: Request, res: Response, next: any) => {
       console.error(err)
+
+      if (err instanceof CustomError) {
+        res.status(err.code).send({ reason: err.message })
+        return
+      }
+
       res.status(500).send({
         reason: err.message ?? 'Erro interno no servidor'
       })

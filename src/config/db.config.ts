@@ -4,7 +4,7 @@ import {
 } from 'mysql'
 
 export class DataBase {
-  private pool: Pool
+  public pool: Pool
 
   constructor () {
     this.openConection()
@@ -24,11 +24,7 @@ export class DataBase {
   public async execute<T>(query: string, params: string[] | unknown): Promise<T> {
     return await new Promise<T>((resolve, reject) => {
       this.pool.query(query, params, (error, results) => {
-        console.log(error)
-        console.log(results)
-        if (error !== null) {
-          reject(error)
-        }
+        if (error !== null) reject(error)
         else resolve(results)
       })
     })

@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { type RequestHandler, type NextFunction, type Request, type Response } from 'express'
 import { AuthMiddleware } from '../middlewares/auth.middleware'
 
 export class AuthControler {
@@ -6,10 +6,10 @@ export class AuthControler {
 
   constructor () {
     this.auth = new AuthMiddleware()
-    this.generateToken = this.generateToken.bind(this);
+    this.generateToken = this.generateToken.bind(this)
   }
 
-  public generateToken = (req: Request, res: Response, next: NextFunction) => {
+  public generateToken: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
     res.status(200)
       .send(this.auth.generateToken())
   }
