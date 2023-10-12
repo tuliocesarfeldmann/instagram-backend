@@ -1,9 +1,9 @@
 import express, { type Application, type Request, type Response } from 'express'
-import { DataBase } from './config/db.config'
 import * as dotenv from 'dotenv'
 import { UserRouter } from './routes/user.router'
 import { AuthRouter } from './routes/auth.router'
 import { CustomError } from './models/customError.model'
+import { dataSource } from './config/db.config'
 
 dotenv.config()
 
@@ -44,7 +44,10 @@ class App {
   }
 
   private initializeDb (): void {
-    new DataBase()
+    dataSource.initialize().then(() => {
+      console.log("Connection initialized with database...");
+    })
+    .catch((error) => console.log(error));
   }
 
   public listen (): void {

@@ -1,6 +1,5 @@
-import { type User } from '../models/user.model'
+import { User } from '../models/entity/user.entity'
 import { UserDAO } from '../dao/user.dao'
-import { type OkPacket } from 'mysql'
 import * as bc from 'bcrypt'
 
 export class UserService {
@@ -10,9 +9,9 @@ export class UserService {
     this.userDAO = new UserDAO()
   }
 
-  public async createUser (user: User): Promise<boolean> {
+  public async createUser (user: User): Promise<User> {
     user.password = await bc.hash(user.password, 10)
 
-    return await this.userDAO.createUser(user).then((resp: OkPacket) => resp.affectedRows > 0)
+    return await this.userDAO.createUser(user)
   }
 }

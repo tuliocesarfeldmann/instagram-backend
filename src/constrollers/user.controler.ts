@@ -10,7 +10,7 @@ export class UserControler {
 
   public createUser = (req: Request, res: Response, next: NextFunction): void => {
     this.userService.createUser(req.body)
-      .then(result => res.status(201).send({ success: result }))
+      .then( _ => res.status(201).send({ success: true }))
       .catch(err => {
         next(err)
       })
